@@ -1,0 +1,14 @@
+{
+  "name": "stripe-card-on-file-demo",
+  "version": "1.0.0",
+  "description": "Stripe card on file demo with Embedded Checkout in Setup Mode",
+  "type": "module",
+  "scripts": {
+    "backend": "cd backend && node server.js",
+    "frontend": "cd frontend && npm run dev",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["stripe", "embedded-checkout", "setup-mode"],
+  "author": "",
+  "license": "ISC"
+}

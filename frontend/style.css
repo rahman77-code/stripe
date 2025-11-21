@@ -1,0 +1,133 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f7f8fa;
+  min-height: 100vh;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Typography */
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+/* Checkout container */
+.checkout-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+  padding: 20px;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: 60px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Success page */
+.success {
+  text-align: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 60px 40px;
+}
+
+.success h1 {
+  color: #22c55e;
+  margin-bottom: 20px;
+}
+
+.success p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.session-info {
+  font-size: 14px;
+  color: #888;
+  font-family: monospace;
+  word-break: break-all;
+  margin-top: 20px;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+/* Error state */
+.error {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+}
+
+.error h2 {
+  color: #ef4444;
+  margin-bottom: 16px;
+}
+
+.error p {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Button */
+.button {
+  display: inline-block;
+  background: #5469d4;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 24px;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background: #4356b8;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .container {
+    padding: 20px 16px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  .success {
+    padding: 40px 20px;
+  }
+}
