@@ -51,7 +51,7 @@ app.post('/api/create-setup-session', async (req, res) => {
       ui_mode: 'embedded', // Iframe embedded checkout
       customer: customer.id,
       payment_method_types: ['card'],
-      return_url: `${process.env.FRONTEND_URL}/billing-return?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${process.env.FRONTEND_URL}?success=true&session_id={CHECKOUT_SESSION_ID}`,
     });
 
     // Return client secret to frontend

@@ -4,7 +4,6 @@ import { loadStripe } from '@stripe/stripe-js';
 const routes = {
   '/': renderBillingPage,
   '/billing-link': renderBillingPage,
-  '/billing-return': renderReturnPage
 };
 
 // Get current route
@@ -13,9 +12,22 @@ function getCurrentRoute() {
   return path === '' ? '/' : path;
 }
 
+// Check if we're on success page
+function isSuccessPage() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('success') === 'true';
+}
+
 // Render the appropriate page based on route
 async function render() {
   const app = document.getElementById('app');
+  
+  // Check if this is a success redirect
+  if (isSuccessPage()) {
+    renderReturnPage(app);
+    return;
+  }
+  
   const route = getCurrentRoute();
   const renderFunction = routes[route] || renderBillingPage;
   
