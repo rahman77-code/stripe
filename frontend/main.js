@@ -40,7 +40,10 @@ async function renderBillingPage(app) {
   app.innerHTML = `
     <div class="container">
       <h1>Add Payment Method</h1>
-      <p class="description">Add a card (you will not be charged now).</p>
+      <p class="description">
+        <strong>HireyAI Fasthire</strong><br>
+        FastHire™ is an on-demand hiring service designed specifically for the caregiver and CNA industry. This service will provide show up interviews for non-certified & HHA candidates for $24.90 and CNA candidates for $34.90. We will charge a $1 deposit to verify the payment method and then bill per show up interview at the end of the business day.
+      </p>
       <div id="checkout" class="checkout-container">
         <!-- Stripe Embedded Checkout will be mounted here -->
       </div>
