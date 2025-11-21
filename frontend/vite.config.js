@@ -6,4 +6,11 @@ export default defineConfig({
     port: 3000,
     open: true, // Opens browser on server start
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html',
+      },
+    },
+  },
 });
