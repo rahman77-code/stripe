@@ -6,13 +6,54 @@ let checkoutInstance = null;
 
 // Phone validation helper
 function validatePhone(phone) {
-  // Strip spaces
-  const cleaned = phone.replace(/\s/g, '');
+  // Strip spaces, dashes, parentheses
+  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
   
   // Check for optional leading plus and then 10-15 digits
   const phoneRegex = /^\+?\d{10,15}$/;
   
   return phoneRegex.test(cleaned);
+}
+
+// Format phone number to US format with +1
+function formatPhoneToUS(phone) {
+  // Remove all non-digits
+  const digitsOnly = phone.replace(/\D/g, '');
+  
+  // If it starts with 1 and has 11 digits, format as +1XXXXXXXXXX
+  if (digitsOnly.length === 11 && digitsOnly.startsWith('1')) {
+    return '+' + digitsOnly;
+  }
+  
+  // If it has exactly 10 digits, add +1 prefix
+  if (digitsOnly.length === 10) {
+    return '+1' + digitsOnly;
+  }
+  
+  // If it already starts with + return as is
+  if (phone.startsWith('+')) {
+    return phone.replace(/[\s\-\(\)]/g, '');
+  }
+  
+  // Otherwise return cleaned version
+  return digitsOnly;
+}
+
+// Format phone as user types (visual formatting)
+function formatPhoneInput(input) {
+  const digitsOnly = input.replace(/\D/g, '');
+  
+  // Limit to 10 digits
+  const limited = digitsOnly.substring(0, 10);
+  
+  // Format as (XXX) XXX-XXXX
+  if (limited.length <= 3) {
+    return limited;
+  } else if (limited.length <= 6) {
+    return `(${limited.substring(0, 3)}) ${limited.substring(3)}`;
+  } else {
+    return `(${limited.substring(0, 3)}) ${limited.substring(3, 6)}-${limited.substring(6)}`;
+  }
 }
 
 // Router implementation
@@ -61,14 +102,15 @@ async function renderBillingPage(app) {
       </p>
       
       <div class="phone-form" id="phone-form">
-        <label for="phone-input" class="phone-label">Phone number</label>
+        <label for="phone-input" class="phone-label">Phone number (US)</label>
         <input 
           type="tel" 
           id="phone-input" 
           name="phone"
           class="phone-input" 
-          placeholder="+1 234 567 8900"
+          placeholder="(234) 567-8900"
           autocomplete="tel"
+          maxlength="14"
         />
         <p class="phone-helper">Please enter the phone number you used to sign up for Hirey AI. We use this to match your payment with your account.</p>
         <div id="phone-error" class="phone-error" style="display: none;"></div>
@@ -200,6 +242,12 @@ async function renderBillingPage(app) {
       }
     }
 
+    // Auto-format phone as user types
+    phoneInput.addEventListener('input', (e) => {
+      const formatted = formatPhoneInput(e.target.value);
+      e.target.value = formatted;
+    });
+
     // Validate and update phone on blur
     phoneInput.addEventListener('blur', async () => {
       const phone = phoneInput.value.trim();
@@ -211,16 +259,22 @@ async function renderBillingPage(app) {
         return;
       }
       
-      // Validate phone
-      if (!validatePhone(phone)) {
-        phoneError.textContent = 'Please enter a valid phone number (10-15 digits, optional + prefix)';
+      // Extract digits only
+      const digitsOnly = phone.replace(/\D/g, '');
+      
+      // Validate: must be exactly 10 digits for US
+      if (digitsOnly.length !== 10) {
+        phoneError.textContent = 'Please enter a valid 10-digit US phone number';
         phoneError.style.display = 'block';
         phoneSuccess.style.display = 'none';
         return;
       }
       
+      // Format to +1XXXXXXXXXX for backend
+      const formattedPhone = formatPhoneToUS(phone);
+      
       // Valid phone - update customer
-      await updateCustomerPhone(phone);
+      await updateCustomerPhone(formattedPhone);
     });
 
   } catch (error) {

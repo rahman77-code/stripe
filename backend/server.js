@@ -89,14 +89,16 @@ app.post('/api/update-customer-phone', async (req, res) => {
       });
     }
 
-    // Validate phone format
-    const cleanedPhone = phone.replace(/\s/g, '');
-    const phoneRegex = /^\+?\d{10,15}$/;
+    // Validate phone format - should be US format: +1XXXXXXXXXX
+    const cleanedPhone = phone.replace(/[\s\-\(\)]/g, '');
     
-    if (!phoneRegex.test(cleanedPhone)) {
+    // Check if it's a valid US phone number (+1 followed by 10 digits)
+    const usPhoneRegex = /^\+1\d{10}$/;
+    
+    if (!usPhoneRegex.test(cleanedPhone)) {
       return res.status(400).json({ 
         error: 'Invalid phone format',
-        message: 'Phone number must be 10-15 digits with optional + prefix'
+        message: 'Phone number must be a valid US number in format +1XXXXXXXXXX'
       });
     }
 
