@@ -34,13 +34,113 @@ h1 {
   margin-bottom: 32px;
 }
 
+/* Phone form */
+.phone-form {
+  background: white;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 72px 20px 88px;
+  margin-bottom: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.phone-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #30313d;
+  margin-bottom: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.phone-input {
+  width: 100%;
+  padding: 11px 12px;
+  font-size: 15px;
+  border: 1px solid #d6d9dc;
+  border-radius: 5px;
+  margin-bottom: 0;
+  margin-left: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background-color: #ffffff;
+  color: #30313d;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.phone-input:hover {
+  border-color: #a9acb0;
+}
+
+.phone-input:focus {
+  outline: none;
+  border-color: #0570de;
+  box-shadow: 0 0 0 1px #0570de, 0 1px 1px 0 rgba(0, 0, 0, 0.07), 0 0 0 4px rgba(5, 112, 222, 0.1);
+}
+
+.phone-helper {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+}
+
+.continue-button {
+  width: 100%;
+  background: #5469d4;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+}
+
+.continue-button:hover:not(:disabled) {
+  background: #4356b8;
+}
+
+.continue-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.phone-notice {
+  color: #059669;
+  font-size: 13px;
+  padding: 8px 0;
+  margin-top: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.phone-error {
+  color: #df1b41;
+  font-size: 13px;
+  padding: 8px 0;
+  margin-top: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.phone-success {
+  color: #059669;
+  font-size: 13px;
+  padding: 8px 0;
+  margin-top: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 /* Checkout container */
 .checkout-container {
   background: white;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-height: 400px;
-  padding: 20px;
+  padding: 20px 72px 20px 72px;
 }
 
 /* Loading state */

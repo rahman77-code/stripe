@@ -38,7 +38,7 @@ app.get('/health', (req, res) => {
 // Create setup session endpoint
 app.post('/api/create-setup-session', async (req, res) => {
   try {
-    // Create a new customer (for MVP, create new one each time)
+    // Create a new customer (phone will be updated separately if provided)
     const customer = await stripe.customers.create({
       metadata: {
         created_at: new Date().toISOString(),
@@ -54,15 +54,66 @@ app.post('/api/create-setup-session', async (req, res) => {
       return_url: `${process.env.FRONTEND_URL}?success=true&session_id={CHECKOUT_SESSION_ID}`,
     });
 
-    // Return client secret to frontend
+    // Return client secret and customer ID to frontend
     res.json({ 
-      client_secret: session.client_secret 
+      clientSecret: session.client_secret,
+      customerId: customer.id
     });
 
   } catch (error) {
     console.error('Error creating setup session:', error);
     res.status(500).json({ 
       error: 'Failed to create setup session',
+      message: error.message 
+    });
+  }
+});
+
+// Update customer phone endpoint
+app.post('/api/update-customer-phone', async (req, res) => {
+  try {
+    const { customerId, phone } = req.body;
+
+    // Validate required fields
+    if (!customerId || typeof customerId !== 'string' || customerId.trim().length === 0) {
+      return res.status(400).json({ 
+        error: 'Customer ID is required',
+        message: 'Please provide a valid customer ID'
+      });
+    }
+
+    if (!phone || typeof phone !== 'string' || phone.trim().length === 0) {
+      return res.status(400).json({ 
+        error: 'Phone number is required',
+        message: 'Please provide a valid phone number'
+      });
+    }
+
+    // Validate phone format
+    const cleanedPhone = phone.replace(/\s/g, '');
+    const phoneRegex = /^\+?\d{10,15}$/;
+    
+    if (!phoneRegex.test(cleanedPhone)) {
+      return res.status(400).json({ 
+        error: 'Invalid phone format',
+        message: 'Phone number must be 10-15 digits with optional + prefix'
+      });
+    }
+
+    // Update customer with phone
+    await stripe.customers.update(customerId, {
+      phone: cleanedPhone,
+      metadata: {
+        phone: cleanedPhone,
+      }
+    });
+
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error('Error updating customer phone:', error);
+    res.status(500).json({ 
+      error: 'Failed to update customer phone',
       message: error.message 
     });
   }
